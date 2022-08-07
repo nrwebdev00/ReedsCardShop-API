@@ -10,6 +10,7 @@ from django.contrib.auth.models import (
 
 class UserManger(BaseUserManager):
 
+    # User can buy
     def create_user(self, email, password=None, **extra_fields):
         if not email:
             raise ValueError('Please Provide a Valid Email.')
@@ -19,6 +20,46 @@ class UserManger(BaseUserManager):
 
         return user
 
+    # User can buy and use the collecting software
+    def create_user_collector(self, email, password):
+        user = self.create_user(email, password)
+        user.is_collector = True
+        user.save(using=self._db)
+
+        return user
+
+    # User can buy, sell, and use the collectiong software
+    def create_user_seller(self, email, password):
+        user = self.create_user(email, password)
+        user.is_collector = True
+        user.is_seller = True
+        user.save(using=self._db)
+
+        return user
+
+    # Admin User has all access
+    def create_superuser(self, email, password):
+        user =  self.create_user(email, password)
+        user.is_staff = True
+        user.is_superuser = True
+        user.is_collector = True
+        user.is_seller = True
+        user.save(using=self._db)
+
+        return user
+
+    def change_user_collector(self, email):
+        user = User.objects.get(email=email)
+        user.is_collector = True
+
+        return user
+
+    def change_user_seller(self, email):
+        user = User.objects.get(email=email)
+        user.is_collector = True
+        user.is_seller = True
+
+        return user
 
 class User(AbstractBaseUser, PermissionsMixin):
     # User in the Data base
@@ -27,6 +68,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    is_collector = models.BooleanField(default=False)
+    is_seller = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     objects = UserManger()
