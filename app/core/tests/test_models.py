@@ -38,6 +38,7 @@ class ModelTests(TestCase):
         user = get_user_model().objects.create_user_collector(
             'test@example.com',
             '98eTi5!Ob4rX',
+            'User 1',
         )
 
         self.assertTrue(user.is_collector)
@@ -46,6 +47,7 @@ class ModelTests(TestCase):
         user = get_user_model().objects.create_user_seller(
             'test@example.com',
             '98eTi5!Ob4rX',
+            'User 1'
         )
 
         self.assertTrue(user.is_collector)
@@ -66,21 +68,23 @@ class ModelTests(TestCase):
 
     def test_change_user_collector(self):
         email = 'test@example.com'
+        name = 'User 1'
         user = get_user_model().objects.create_user(
             email,
             '98eTi5!Ob4rX',
         )
-        user = get_user_model().objects.change_user_collector(email)
+        user = get_user_model().objects.change_user_collector(email, name)
 
         self.assertTrue(user.is_collector)
 
     def test_change_user_seller(self):
         email = 'test@example.com'
+        name = 'User 1'
         user = get_user_model().objects.create_user(
             email,
             '98eTi5!Ob4rX',
         )
-        user = get_user_model().objects.change_user_seller(email)
+        user = get_user_model().objects.change_user_seller(email, name)
 
         self.assertTrue(user.is_seller)
         self.assertTrue(user.is_collector)

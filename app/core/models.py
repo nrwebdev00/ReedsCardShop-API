@@ -21,18 +21,20 @@ class UserManger(BaseUserManager):
         return user
 
     # User can buy and use the collecting software
-    def create_user_collector(self, email, password):
+    def create_user_collector(self, email, password, name):
         user = self.create_user(email, password)
         user.is_collector = True
+        user.name = name
         user.save(using=self._db)
 
         return user
 
     # User can buy, sell, and use the collectiong software
-    def create_user_seller(self, email, password):
+    def create_user_seller(self, email, password, name):
         user = self.create_user(email, password)
         user.is_collector = True
         user.is_seller = True
+        user.name = name
         user.save(using=self._db)
 
         return user
@@ -48,16 +50,18 @@ class UserManger(BaseUserManager):
 
         return user
 
-    def change_user_collector(self, email):
+    def change_user_collector(self, email, name):
         user = User.objects.get(email=email)
         user.is_collector = True
+
 
         return user
 
-    def change_user_seller(self, email):
+    def change_user_seller(self, email, name):
         user = User.objects.get(email=email)
         user.is_collector = True
         user.is_seller = True
+
 
         return user
 
