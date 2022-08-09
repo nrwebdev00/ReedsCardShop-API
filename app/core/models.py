@@ -23,6 +23,7 @@ class UserManger(BaseUserManager):
     # User can buy and use the collecting software
     def create_user_collector(self, email, password, name):
         user = self.create_user(email, password)
+        user.set_password(password)
         user.is_collector = True
         user.name = name
         user.save(using=self._db)
@@ -32,6 +33,7 @@ class UserManger(BaseUserManager):
     # User can buy, sell, and use the collectiong software
     def create_user_seller(self, email, password, name):
         user = self.create_user(email, password)
+        user.set_password(password)
         user.is_collector = True
         user.is_seller = True
         user.name = name
