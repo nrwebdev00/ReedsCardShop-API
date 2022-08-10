@@ -74,6 +74,3 @@ class PublicApiTests(TestCase):
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         self.assertTrue(seller.is_collector)
         self.assertTrue(seller.is_seller)
-
-
-

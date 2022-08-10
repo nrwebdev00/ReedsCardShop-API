@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     # 3rd Party Libs
     'rest_framework',
+    'rest_framework.authtoken',
     'drf_spectacular',
 
     # Apps
